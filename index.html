@@ -1,6 +1,6 @@
 <html>
 
-    <title>Seating Widget </title>
+    <title>BMTL Seating Widget </title>
 
 <head>
 
@@ -76,7 +76,7 @@ var upperConfig = {
     startColumnCodeIndex: 1,
     codeColumnsIndexes: [0, 29],   
     regions: {
-        seat: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:AI27", "AL5:AO10", "AN1:AP3", "AL12:AO17", "AL19:AO24", "AO26:AQ28"]
+        seat: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"]
 //        pole: ["@1", "@26", "J5", "J22:J23"]
     }
 };
@@ -203,10 +203,10 @@ var SeatingGrid = createClass({
     },
     
     getRowHeaderLetters: function(code) {
-        if (code < 90) {
+        if (code <= 90) {
             return String.fromCharCode(code);
         } else {
-            return "A" + String.fromCharCode(code - 25);
+            return "A" + String.fromCharCode(code - 26);
         }
     },
 
@@ -227,16 +227,14 @@ var SeatingGrid = createClass({
 });
 
 function renderLevels() {
-    var grid1 = new SeatingGrid(lowerConfig);
-    // document.getElementById("lowerLevelContainer").appendChild(new SeatingGrid(lowerConfig).createLevelGrid());
+    document.getElementById("lowerLevelContainer").appendChild(new SeatingGrid(lowerConfig).createLevelGrid());
     document.getElementById("upperLevelContainer").appendChild(new SeatingGrid(upperConfig).createLevelGrid());
 }
 </script>
 </head>
 <body>
-    <div id="lowerLevelContainer" />
-    <hr>
-    <div id="upperLevelContainer" />
+    <div id="lowerLevelContainer"></div>
+    <div id="upperLevelContainer"></div>
 </body>
 <script>
 renderLevels();
