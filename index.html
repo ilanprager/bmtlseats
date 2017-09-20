@@ -18,7 +18,7 @@
 }
     
 .seat {
-    background-color: aqua;
+    background-color: moccasin;
 }
     
 .shulchan, .bimah {
@@ -37,7 +37,11 @@
     text-align: center;
 }
     
-.seat.selected {
+.seat.choice-0 {
+    background-color: green;
+}
+    
+.seat.choice-1 {
     background-color: yellow;
 }
 </style>
@@ -50,13 +54,15 @@
 // startRowCodeIndex: zero based index at which to start labeling rows
 // startColumnCodeIndex: zero based index at which to start labeling columns
 // codeColumnsIndexes: array of zero based columns indexes where numbers should appear    
+// numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
 var lowerConfig = {
     numRows: 22,
     numCols: 28,
     startRowCode: "A",
     startRowIndex: 2,
     startColumnCodeIndex: 1,
-    codeColumnsIndexes: [0, 27],    
+    codeColumnsIndexes: [0, 27],  
+    numChoices: 2,
     regions: {
         seat: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A26", "B22:F26", "G2:G5", "H2:I8",
                "J2:J4", "J6:J8", "K2:K8", "M2:M7", "N3:N7", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
@@ -74,7 +80,8 @@ var upperConfig = {
     startRowCode: "U",
     startRowIndex: 2,
     startColumnCodeIndex: 1,
-    codeColumnsIndexes: [0, 29],   
+    codeColumnsIndexes: [0, 29],
+    numChoices: 2,
     regions: {
         seat: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"]
 //        pole: ["@1", "@26", "J5", "J22:J23"]
@@ -91,6 +98,17 @@ var SeatingGrid = createClass({
     
     constructor: function(config) {
         this.config = config;
+        this.state = {
+            selected: {}
+        };
+        this.initSelected();
+        this.eventListeners = {};
+    },
+    
+    initSelected: function() {
+        for (var i = 0; i < this.config.numChoices; i++) {
+            this.state.selected[i] = {};
+        }        
     },
     
     createLevelGrid: function() {
@@ -107,9 +125,9 @@ var SeatingGrid = createClass({
             }
             tBody.appendChild(row);
         }
-        this.applyGridCellStyles(grid, config);
         this.addRowHeaders(grid, config.startRowCode, config.numRows)
         this.addColumnHeaders(grid, config.numCols);
+        this.applyGridCellStyles(grid, config);
         return grid;
     },
     
@@ -127,6 +145,8 @@ var SeatingGrid = createClass({
                         } catch(e) {
                             console.error(ranges[i], coordinates);
                         }
+                        cell.rowCode = this.getCellAt(grid, 0, rowIndex).rowCode;
+                        cell.colCode = this.getCellAt(grid, colIndex, 0).colCode;
                         cell.className += category + " ";
                         if (category == "seat") {
                             this.assignSeatEvents(cell);
@@ -172,21 +192,102 @@ var SeatingGrid = createClass({
         return value;
     },
     
-
-    
     getCellAt: function(grid, x, y) {
-        console.log(x, y);
         return grid.tBodies[0].childNodes[y].childNodes[x];
     },
     
-    assignSeatEvents: function(cell) {
-        cell.onclick = function() {
-            if (cell.className.indexOf("selected") > -1) {
-                cell.className = "seat";
-            } else {
-                cell.className = "seat selected";
-            }
+    getSelectedChoice: function(seatCode) {
+        for (var choice = 0; choice < this.config.numChoices; choice++) {
+            if (this.state.selected[choice][seatCode]) {
+                return choice;
+            }  
+        }
+        return -1;
+    },
+    
+    selectChoice: function(cell, seatCode, choice) {
+        this.addClass(cell, "choice-" + choice);
+        this.state.selected[choice][seatCode] = true;
+    },
+    
+    deselectChoice: function(cell, seatCode, choice) {
+        this.removeClass(cell, "choice-" + choice);
+        delete this.state.selected[choice][seatCode];        
+    },
+    
+    createStatusEvent: function(mixinData) {
+        var status = {
+            seatChoices: {}
         };
+        for (var choiceKey in this.state.selected) {
+            status.seatChoices[choiceKey] = Object.keys(this.state.selected[choiceKey]);            
+        }
+        if (mixinData) {
+            Object.assign(status, mixinData);
+        }
+        return status;
+    },
+    
+    onCellClick: function(cell) {
+        var seatCode = cell.rowCode + cell.colCode;
+        var selectedChoice = this.getSelectedChoice(seatCode);
+        if (selectedChoice > -1) {
+            this.deselectChoice(cell, seatCode, selectedChoice);
+        }
+        selectedChoice++;
+        if (selectedChoice < this.config.numChoices) {
+            this.selectChoice(cell, seatCode, selectedChoice);
+        }
+        this.fireEvent("change", this.createStatusEvent({
+            type: "change"
+        }));
+    },
+    
+    on: function(eventName, listener) {
+        var listeners = this.eventListeners[eventName];
+        if (!listeners) {
+            listeners = [];
+            this.eventListeners[eventName] = listeners;
+        }
+        listeners.push(listener);
+    },
+    
+    fireEvent: function(eventName, event) {
+        var listeners = this.eventListeners[eventName];
+        if (listeners) {
+            listeners.forEach(function(listener) {
+                listener(event);
+            }, this);
+        }
+    },
+    
+    hasClass: function(elem, className) {
+        if (elem.classList) {
+            return elem.classList.contains(className);            
+        } else {
+            return !!elem.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+        }
+    },
+
+    addClass(elem, className) {
+        if (elem.classList) {
+            elem.classList.add(className);            
+        } else if (!this.hasClass(elem, className)) {
+            elem.className += " " + className;
+        }
+    },
+
+    removeClass: function(elem, className) {
+        if (elem.classList) {
+            elem.classList.remove(className)            
+        } else if (this.hasClass(elem, className)) {
+            var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+            elem.className = elem.className.replace(reg, ' ');
+        }
+    },
+    
+    assignSeatEvents: function(cell) {
+        cell.onclick = this.onCellClick.bind(this, cell);
     },
     
     addRowHeaders: function(grid, startLetter, numRows) {
@@ -195,7 +296,9 @@ var SeatingGrid = createClass({
         for(var i = this.config.startRowIndex; i < numRows; i++) {
             codeColumnsIndexes.forEach(function(colIndex) {
                 var cell = this.getCellAt(grid, colIndex, i);
-                cell.innerHTML = this.getRowHeaderLetters(code);
+                var rowCode = this.getRowHeaderLetters(code);
+                cell.rowCode = rowCode;
+                cell.innerHTML = rowCode;
                 cell.className = "rowHeader";                
             }, this);
             code++;
@@ -213,7 +316,9 @@ var SeatingGrid = createClass({
     addColumnHeaders: function(grid, numColumns) {
         for(var i = 1; i < numColumns; i++) {
             var cell = this.getCellAt(grid, i, 0);
-            cell.innerHTML = i;
+            var colCode = i + "";
+            cell.colCode = colCode;
+            cell.innerHTML = colCode;
             cell.className = "colHeader";
         }
     },
@@ -227,8 +332,17 @@ var SeatingGrid = createClass({
 });
 
 function renderLevels() {
-    document.getElementById("lowerLevelContainer").appendChild(new SeatingGrid(lowerConfig).createLevelGrid());
-    document.getElementById("upperLevelContainer").appendChild(new SeatingGrid(upperConfig).createLevelGrid());
+    var lowerGrid = new SeatingGrid(lowerConfig);
+    var upperGrid = new SeatingGrid(upperConfig);
+    document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createLevelGrid());
+    document.getElementById("upperLevelContainer").appendChild(upperGrid.createLevelGrid());
+    lowerGrid.on("change", function(status) {
+        console.log(status);
+    });
+    upperGrid.on("change", function(status) {
+        console.log(status);
+    });
+
 }
 </script>
 </head>
