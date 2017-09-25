@@ -339,7 +339,7 @@ function renderLevels() {
     document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createLevelGrid());
     document.getElementById("upperLevelContainer").appendChild(upperGrid.createLevelGrid());
     lowerGrid.on("change", function(status) {
-        windown
+	console.log(status);
     });
     upperGrid.on("change", function(status) {
         console.log(status);
