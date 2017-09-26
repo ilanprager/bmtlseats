@@ -148,17 +148,22 @@ function getCurrentWidgetStatus() {
     var aggregate = aggregateStatuses([lowerStatus, upperStatus]);
     var hasChoices = false;
     for(var choiceKey in aggregate.seatChoices) {
-        hasChoices = true;
-        break;
+        if (aggregate.seatChoices[choiceKey] != "") {
+            hasChoices = true;
+            break;
+        }
     }
-    if (hasChoices) {
-        return aggregate;
+    if (!hasChoices) {
+        aggregate.empty = true;
     }
-    return null;
+    return aggregate;
 }
     
 function pushChanges() {
-//    JFCustomWidget.sendData(getCurrentWidgetStatus());
+    var status = getCurrentWidgetStatus();        
+    var value = status.empty ? null : JSON.stringify(status);
+    JFCustomWidget.sendData(getCurrentWidgetStatus());
+    console.log(getCurrentWidgetStatus());
 }
 
 var lowerGrid = new SeatingGrid(lowerConfig);
@@ -173,10 +178,10 @@ document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid(
 
 JFCustomWidget.subscribe("ready", function(){
     JFCustomWidget.subscribe("submit", function() {
-        var status = getCurrentWidgetStatus();
-        var value = status ? JSON.stringify(status) : null;        
+        var status = getCurrentWidgetStatus();        
+        var value = status.empty ? null : JSON.stringify(status);  
         JFCustomWidget.sendSubmit({
-            valid: status != null,
+            valid: value != null,
             value: status
         });
     });
