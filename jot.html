@@ -182,7 +182,7 @@ JFCustomWidget.subscribe("ready", function(){
         var value = status.empty ? null : JSON.stringify(status);  
         JFCustomWidget.sendSubmit({
             valid: value != null,
-            value: status
+            value: value
         });
     });
 });
