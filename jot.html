@@ -222,7 +222,7 @@ var SeatingGrid = createClass({
             seatChoices: {}
         };
         for (var choiceKey in this.state.selected) {
-            status.seatChoices["choice" + choiceKey] = Object.keys(this.state.selected[choiceKey]);            
+            status.seatChoices["choice" + choiceKey] = Object.keys(this.state.selected[choiceKey]).join(",");            
         }
         if (mixinData) {
             Object.assign(status, mixinData);
