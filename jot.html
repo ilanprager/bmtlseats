@@ -145,7 +145,16 @@ function aggregateStatuses(statuses) {
 function getCurrentWidgetStatus() {
     var lowerStatus = lowerGrid.getStatus();
     var upperStatus = upperGrid.getStatus();
-    return aggregateStatuses([lowerStatus, upperStatus]);    
+    var aggregate = aggregateStatuses([lowerStatus, upperStatus]);
+    var hasChoices = false;
+    for(var choiceKey in aggregate.seatChoices) {
+        hasChoices = true;
+        break;
+    }
+    if (hasChoices) {
+        return aggregate;
+    }
+    return null;
 }
     
 function pushChanges() {
@@ -164,9 +173,11 @@ document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid(
 
 JFCustomWidget.subscribe("ready", function(){
     JFCustomWidget.subscribe("submit", function() {
+        var status = getCurrentWidgetStatus();
+        var value = status ? JSON.stringify(status) : null;
         JFCustomWidget.sendSubmit({
-            valid: true,
-            value: JSON.stringify(getCurrentWidgetStatus())
+            valid: status != null,
+            value: status
         });
     });
 });
