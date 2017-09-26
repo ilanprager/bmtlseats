@@ -142,16 +142,25 @@ function aggregateStatuses(statuses) {
     return aggregate;
 };
 
-var lowerGrid = new SeatingGrid(lowerConfig);
-var upperGrid = new SeatingGrid(upperConfig);
-document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createGrid());
-document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid());
-
 function getCurrentWidgetStatus() {
     var lowerStatus = lowerGrid.getStatus();
     var upperStatus = upperGrid.getStatus();
     return aggregateStatuses([lowerStatus, upperStatus]);    
 }
+    
+function pushChanges() {
+    JFCustomWidget.sendData(getCurrentWidgetStatus());
+}
+
+var lowerGrid = new SeatingGrid(lowerConfig);
+var upperGrid = new SeatingGrid(upperConfig);
+    
+lowerGrid.on("change", pushChanges);
+upperGrid.on("change", pushChanges);
+    
+document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createGrid());
+document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid());
+
 
 JFCustomWidget.subscribe("ready", function(){
     JFCustomWidget.subscribe("submit", function() {
