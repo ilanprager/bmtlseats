@@ -113,7 +113,7 @@ var SeatingGrid = createClass({
         }        
     },
     
-    createLevelGrid: function() {
+    createGrid: function() {
         var config = this.config;
         var grid = document.createElement("table");
         grid.className = "seatingGrid";
@@ -222,12 +222,16 @@ var SeatingGrid = createClass({
             seatChoices: {}
         };
         for (var choiceKey in this.state.selected) {
-            status.seatChoices["choice" + choiceKey] = Object.keys(this.state.selected[choiceKey]).join(",");            
+            status.seatChoices[choiceKey] = Object.keys(this.state.selected[choiceKey]);            
         }
         if (mixinData) {
             Object.assign(status, mixinData);
         }
         return status;
+    },
+	
+    getStatus() {
+	return this.createStatusEvent();    
     },
     
     onCellClick: function(cell) {
@@ -332,20 +336,6 @@ var SeatingGrid = createClass({
        rangeCoordinates.end.y += yOffset;
     }
 });
-
-function renderLevels() {
-    var lowerGrid = new SeatingGrid(lowerConfig);
-    var upperGrid = new SeatingGrid(upperConfig);
-    document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createLevelGrid());
-    document.getElementById("upperLevelContainer").appendChild(upperGrid.createLevelGrid());
-    lowerGrid.on("change", function(status) {
-	console.log(status);
-    });
-    upperGrid.on("change", function(status) {
-        console.log(status);
-    });
-
-}
 </script>
 </head>
 <body>
@@ -353,15 +343,43 @@ function renderLevels() {
     <div id="upperLevelContainer"></div>
 </body>
 <script>
+function aggregateStatuses(statuses) {
+    var nameMap = ["1st","2nd","3rd","4th","5th"];
+    var aggregate = {
+	seatChoices: {}    
+    };
+    statuses.forEach(function(status) {
+	for(var choiceKey in status.seatChoices) {
+	    var choices = status.seatChoices[choiceKey];
+	    var aggChoices = aggregate.seatChoices[choiceKey];
+	    if (!aggChoices) {
+	    	aggChoices = [];
+	    	aggregate.seatChoices[choiceKey] = aggChoices;
+	    }
+	    choices.forEach(function(choice) {
+	    	aggChoices.push(choice);
+	    });
+	}
+    });
+    for(var choiceKey in aggregate.seatChoices) {
+    	var choices = aggregate.seatChoices[choiceKey];
+    	delete aggregate.seatChoices[choiceKey];
+	aggregate.seatChoices[nameMap[choiceKey]] = choices.join(",");
+    }
+    return aggregate;
+}
 JFCustomWidget.subscribe("ready", function(){
     var lowerGrid = new SeatingGrid(lowerConfig);
     var upperGrid = new SeatingGrid(upperConfig);
-    document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createLevelGrid());
-    document.getElementById("upperLevelContainer").appendChild(upperGrid.createLevelGrid());
+    document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createGrid());
+    document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid());
     JFCustomWidget.subscribe("submit", function() {
+	var lowerStatus = lowerGrid.getStatus();
+	var upperStatus = upperGrid.getStatus();
+	var aggregateStatus = aggregateStatuses([lowerStatus, upperStatus]);
 	JFCustomWidget.sendSubmit({
 		valid: true,
-		value: JSON.stringify(lowerGrid.createStatusEvent())
+		value: JSON.stringify(aggregateStatus)
 	});
     });
 });
