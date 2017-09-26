@@ -158,7 +158,7 @@ function getCurrentWidgetStatus() {
 }
     
 function pushChanges() {
-    JFCustomWidget.sendData(getCurrentWidgetStatus());
+//    JFCustomWidget.sendData(getCurrentWidgetStatus());
 }
 
 var lowerGrid = new SeatingGrid(lowerConfig);
@@ -174,7 +174,7 @@ document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid(
 JFCustomWidget.subscribe("ready", function(){
     JFCustomWidget.subscribe("submit", function() {
         var status = getCurrentWidgetStatus();
-        var value = status ? JSON.stringify(status) : null;
+        var value = status ? JSON.stringify(status) : null;        
         JFCustomWidget.sendSubmit({
             valid: status != null,
             value: status
