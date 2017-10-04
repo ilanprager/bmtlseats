@@ -11,6 +11,7 @@
 // startColumnCodeIndex: zero based index at which to start labeling columns
 // codeColumnsIndexes: array of zero based columns indexes where numbers should appear    
 // numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
+// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
 // var sampleConfig = {
 //    numRows: 22,
 //    numCols: 28,
@@ -76,6 +77,7 @@ window.SeatingGrid = createClass({
     
     applyGridCellStyles: function(grid, config) {
         var regions = config.regions;
+        var seatRegions = config.seatRegions;
         for (var category in regions) {
             var ranges = regions[category];
             for (var i = 0; i < ranges.length; i++) {
@@ -90,8 +92,9 @@ window.SeatingGrid = createClass({
                         }
                         cell.rowCode = this.getCellAt(grid, 0, rowIndex).rowCode;
                         cell.colCode = this.getCellAt(grid, colIndex, 0).colCode;
-                        cell.className += category + " ";
-                        if (category == "seat") {
+                        this.addClass(cell,category);
+                        if (category == "seat" || seatRegions.indexOf(category) > -1) {
+                            this.addClass(cell, "seat");
                             this.assignSeatEvents(cell);
                         }
                     }

@@ -32,7 +32,7 @@ body {
 .seatingGrid td {
     width: 20px;
     height: 20px;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     padding: 0px;
     margin: 0px;
     font-size: 9pt;
@@ -59,12 +59,54 @@ body {
     text-align: center;
 }
     
-.seat.choice-0 {
-    background-color: green;
+.choice-0 {
+    background-image: url("images/one.svg") !important;
+    background-size: 18px !important;
+    background-repeat: no-repeat;
+    background-position-x: center; 
+    background-position-y: center;
 }
     
-.seat.choice-1 {
-    background-color: yellow;
+.choice-1 {
+    background-image: url("images/two.svg") !important;
+    background-size: 18px !important;
+    background-repeat: no-repeat;
+    background-position-x: center; 
+    background-position-y: center; 
+}
+    
+.seat.men {
+    background-color: #E5EFFF;
+    background-image: url("images/seat.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+    
+.seat.women {
+    background-color: #FFE5FE;
+    background-image: url("images/seat.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.seat.plastic {
+    background-image: url("images/seat-plastic.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+}
+    
+.mechitzahorizontal {
+    border-bottom: 4px solid brown !important;
+}
+
+.mechitzavertical {
+    border-right: 4px solid brown !important;
 }
 </style>
     
@@ -76,6 +118,7 @@ body {
 // startColumnCodeIndex: zero based index at which to start labeling columns
 // codeColumnsIndexes: array of zero based columns indexes where numbers should appear    
 // numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
+// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
 var lowerConfig = {
     numRows: 22,
     numCols: 28,
@@ -84,14 +127,19 @@ var lowerConfig = {
     startColumnCodeIndex: 1,
     codeColumnsIndexes: [0, 27],  
     numChoices: 2,
+    seatRegions: ["men", "women", "plastic"],
     regions: {
-        seat: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A26", "B22:F26", "G2:G5", "H2:I8",
-               "J2:J4", "J6:J8", "K2:K8", "M2:M7", "N3:N7", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
-               "K18:M25", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
+        men: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A26", "B22:F26", "G2:G5", "H2:I8",
+               "J2:J4", "J6:J8", "K2:K8", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
+               "K18:M25"],
+        women: ["M2:M7", "N3:N7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
         shulchan: ["C11:F16"],
         bimah: ["@10:@17","@20", "A13:A14"],
         pole: ["@1", "@26", "J5", "J22:J23"],
-        rabbi: ["@19:A19"]        
+        rabbi: ["@19:A19"],
+        plastic: ["M2:M7"],
+        mechitzahorizontal: ["L1:L7","O8:O26"],
+        mechitzavertical: ["M7:O7"]
     }
 };
     
@@ -103,8 +151,10 @@ var upperConfig = {
     startColumnCodeIndex: 1,
     codeColumnsIndexes: [0, 29],
     numChoices: 2,
+    seatRegions: ["men", "women", "plastic"],
     regions: {
-        seat: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"]
+        women: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"],
+        plastic: ["AP5:AP10", "AO26:AQ28"]
     }
 };
 </script>
