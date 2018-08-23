@@ -2,305 +2,324 @@
 
 <head>
 
-<title>BMTL Seating Widget </title>
+    <title>BMTL Seating Widget </title>
 
-<script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
-<script src="js/SeatingGrid.js"></script>
+    <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
+    <script src="js/SeatingGrid.js"></script>
 
-<style>
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-.gridTitle {
-    width: 600px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 4px;
-}
-    
-.gridSeparator {
-    height: 10px;
-}
-    
-.seatingGrid {
-    width: 600px;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-    
-.seatingGrid td {
-    width: 20px;
-    height: 20px;
-    border: 1px solid lightgray;
-    padding: 0px;
-    margin: 0px;
-    font-size: 9pt;
-}
-    
-.seat {
-    cursor: pointer;
-}
-    
-.shulchan, .bimah {
-    background-color: lightgray;
-}
+        .gridTitle {
+            width: 600px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
 
-.pole {
-    background-color: darkgray;
-}
-    
-.rabbi {
-    background-color: lightgray;
-}
-    
-.rowHeader, .colHeader {
-    text-align: center;
-}
-    
-.choice-0 {
-    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0%29 --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 496.158 496.158' style='enable-background:new 0 0 496.158 496.158;' xml:space='preserve'%3E%3Cpath style='fill:%232b9e04 ;' d='M248.082,0.003C111.07,0.003,0,111.061,0,248.085c0,137,111.07,248.07,248.082,248.07 c137.006,0,248.076-111.07,248.076-248.07C496.158,111.061,385.088,0.003,248.082,0.003z'/%3E%3Cpath style='fill:%23FFFFFF;' d='M278.767,145.419c-3.126-4.003-7.276-6.006-12.451-6.006c-4.591,0-7.716,0.879-9.375,2.637 c-1.662,1.758-5.226,6.445-10.693,14.063c-5.47,7.617-11.744,14.502-18.823,20.654c-7.082,6.152-16.53,12.012-28.345,17.578 c-7.91,3.712-13.429,6.738-16.553,9.082c-3.126,2.344-4.688,6.006-4.688,10.986c0,4.298,1.586,8.082,4.761,11.353 c3.172,3.273,6.812,4.907,10.913,4.907c8.592,0,25.292-9.521,50.098-28.564V335.41c0,7.814,1.806,13.722,5.42,17.725 c3.612,4.003,8.397,6.006,14.355,6.006c13.378,0,20.068-9.814,20.068-29.443V161.972 C283.455,154.941,281.892,149.425,278.767,145.419z'/%3E%3C/svg%3E%0A") !important;
-    background-size: 16px !important;
-    background-repeat: no-repeat;
-    background-position-x: center; 
-    background-position-y: center;
-}
-    
-.choice-1 {
-    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0%29 --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 496.158 496.158' style='enable-background:new 0 0 496.158 496.158;' xml:space='preserve'%3E%3Cpath style='fill:%23FFC100;' d='M248.082,0.003C111.07,0.003,0,111.061,0,248.085c0,137,111.07,248.07,248.082,248.07 c137.006,0,248.076-111.07,248.076-248.07C496.158,111.061,385.088,0.003,248.082,0.003z'/%3E%3Cpath style='fill:%23FFFFFF;' d='M319.783,325.595c-4.005-3.124-9.814-4.688-17.432-4.688h-76.465c2.44-3.71,4.834-6.885,7.178-9.521 c5.468-6.64,15.55-15.967,30.249-27.979c14.696-12.012,25.17-20.824,31.421-26.44c6.249-5.614,12.378-13.378,18.384-23.291 c6.006-9.911,9.009-20.922,9.009-33.032c0-7.713-1.442-15.161-4.321-22.339c-2.882-7.178-6.91-13.5-12.085-18.97 c-5.177-5.468-11.183-9.764-18.018-12.891c-10.547-4.688-23.291-7.031-38.232-7.031c-12.403,0-23.218,1.831-32.446,5.493 s-16.846,8.473-22.852,14.429c-6.006,5.958-10.524,12.598-13.55,19.922c-3.028,7.324-4.541,14.355-4.541,21.094 c0,5.566,1.611,9.961,4.834,13.184s7.274,4.834,12.158,4.834c5.566,0,9.789-1.758,12.671-5.273 c2.879-3.516,5.468-8.544,7.764-15.088c2.293-6.542,3.93-10.547,4.907-12.012c7.324-11.229,17.381-16.846,30.176-16.846 c6.054,0,11.646,1.369,16.772,4.102c5.127,2.735,9.178,6.569,12.158,11.499c2.978,4.933,4.468,10.524,4.468,16.772 c0,5.763-1.392,11.646-4.175,17.651s-6.837,11.865-12.158,17.578c-5.324,5.713-11.989,11.403-19.995,17.065 c-4.493,3.028-11.964,9.352-22.412,18.97c-10.451,9.62-22.169,21.167-35.156,34.644c-3.126,3.321-6.006,7.887-8.643,13.696 c-2.637,5.812-3.955,10.474-3.955,13.989c0,5.47,2.051,10.231,6.152,14.282c4.102,4.054,9.814,6.079,17.139,6.079H306.6 c6.445,0,11.254-1.659,14.429-4.98c3.172-3.319,4.761-7.372,4.761-12.158C325.789,332.97,323.786,328.722,319.783,325.595z'/%3E%3C/svg%3E%0A") !important;
-    background-size: 16px !important;
-    background-repeat: no-repeat;
-    background-position-x: center; 
-    background-position-y: center; 
-}
-        
-.seat.men {
-    background-color: #E5EFFF;
-    background-image: url("images/seat-shtender.svg");
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-}
+        .gridSeparator {
+            height: 10px;
+        }
 
-.seat.men.noshtender {
-    background-image: url("images/seat.svg");
-}
+        .seatingGrid {
+            width: 600px;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
 
-.seat.women.noshtender {
-    background-image: url("images/seat.svg");
-}
-    
-.seat.women {
-    background-color: #FFEEFE;
-    background-image: url("images/seat-shtender.svg");
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-}
+        .seatingGrid td {
+            width: 20px;
+            height: 20px;
+            border: 1px solid lightgray;
+            padding: 0px;
+            margin: 0px;
+            font-size: 9pt;
+        }
 
-.seat.plastic {
-    background-image: url("images/seat-plastic.svg");
-    background-size: 16px;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-}
-    
-.seat.women.sidewaysright {
-    background-image: url("images/seat-shtender-right.svg");
-}
+        .seat {
+            cursor: pointer;
+        }
 
-.seat.women.sidewaysleft {
-    background-image: url("images/seat-shtender-left.svg");
-}
+        .shulchan, .bimah {
+            background-color: lightgray;
+        }
 
-.seat.women.sidewaysright.noshtender {
-    background-image: url("images/seat-right.svg");
-}
+        .pole {
+            background-color: darkgray;
+        }
 
-.seat.women.sidewaysleft.noshtender {
-    background-image: url("images/seat-left.svg");
-}
-    
-.mechitzahorizontal {
-    border-bottom: 4px solid brown !important;
-}
+        .rabbi {
+            background-color: lightgray;
+        }
 
-.mechitzavertical {
-    border-right: 4px solid brown !important;
-}
-    
-.legend {
-    font-size: 9pt;
-    margin-bottom: 10px;
-}
-.legendCell {
-    width: 20px;
-    height: 20px;
-}
-.legendLabel {
-    padding-right: 20px;
-}
+        .rowHeader, .colHeader {
+            text-align: center;
+        }
 
-.legendCell.seat.men {
-    background-color: #FFFFFF !important;
-}
-    
-.bimahLabel {
-    position: absolute;
-    top: 200px;
-    left: 275px;
-    font-size: 9pt;
-}
-</style>
-    
-<script>    
-// numRows: number of total grid rows including headers
-// numCols: number of total grid columns including headers
-// startRowCode: letter code at which to start grid rows
-// startRowCodeIndex: zero based index at which to start labeling rows
-// startColumnCodeIndex: zero based index at which to start labeling columns
-// codeColumnsIndexes: array of zero based columns indexes where numbers should appear    
-// numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
-// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
-var lowerConfig = {
-    numRows: 22,
-    numCols: 28,
-    startRowCode: "A",
-    startRowIndex: 2,
-    startColumnCodeIndex: 1,
-    codeColumnsIndexes: [0, 27],  
-    numChoices: 2,
-    seatRegions: ["men", "women", "plastic"],
-    regions: {
-        men: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A26", "B22:F26", "G2:G5", "H2:I8",
-               "J2:J4", "J6:J8", "K2:K8", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
-               "K18:M25"],
-        women: ["M2:M7", "N3:N7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
-        shulchan: ["C11:F16"],
-        bimah: ["@10:@17","@20", "A13:A14"],
-        pole: ["@1", "@26", "J5", "J22:J23"],
-        rabbi: ["@19:A19"],
-        plastic: ["M2:M7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
-	noshtender: ["B7:B8","C9:C10","C17:C20","G2:G5","H6:H8","H10:H16","H18:H25","K22:K23","N3:N7"],
-        mechitzahorizontal: ["L1:L7","O8:O26"],
-        mechitzavertical: ["M7:O7"]
-    }
-};
-    
-var upperConfig = {
-    numRows: 25,
-    numCols: 30,
-    startRowCode: "U",
-    startRowIndex: 2,
-    startColumnCodeIndex: 1,
-    codeColumnsIndexes: [0, 29],
-    numChoices: 2,
-    seatRegions: ["men", "women", "plastic"],
-    regions: {
-        women: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"],
-        sidewaysleft: ["U2:Y3", "AA2:AE3", "AG2:AK3"],
-        sidewaysright: ["U26:Y27", "AA26:AE27", "AG26:AK27", "AL27"],
-        plastic: ["AP5:AP10", "AO26:AQ28","AN1:AP3"],
-	noshtender:["U3:Y3","AA3:AE3","AG3:AK3","AM5:AM10","AM12:AM17","AM19:AM24","U26:Y26","AA26:AE26","AG26:AK26"],
-        mechitzahorizontal: ["AL4:AL25"],
-        mechitzavertical: ["U3:AL3", "U25:AL25"]
-    }
-};
-</script>
+        .choice-0 {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0%29 --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 496.158 496.158' style='enable-background:new 0 0 496.158 496.158;' xml:space='preserve'%3E%3Cpath style='fill:%232b9e04 ;' d='M248.082,0.003C111.07,0.003,0,111.061,0,248.085c0,137,111.07,248.07,248.082,248.07 c137.006,0,248.076-111.07,248.076-248.07C496.158,111.061,385.088,0.003,248.082,0.003z'/%3E%3Cpath style='fill:%23FFFFFF;' d='M278.767,145.419c-3.126-4.003-7.276-6.006-12.451-6.006c-4.591,0-7.716,0.879-9.375,2.637 c-1.662,1.758-5.226,6.445-10.693,14.063c-5.47,7.617-11.744,14.502-18.823,20.654c-7.082,6.152-16.53,12.012-28.345,17.578 c-7.91,3.712-13.429,6.738-16.553,9.082c-3.126,2.344-4.688,6.006-4.688,10.986c0,4.298,1.586,8.082,4.761,11.353 c3.172,3.273,6.812,4.907,10.913,4.907c8.592,0,25.292-9.521,50.098-28.564V335.41c0,7.814,1.806,13.722,5.42,17.725 c3.612,4.003,8.397,6.006,14.355,6.006c13.378,0,20.068-9.814,20.068-29.443V161.972 C283.455,154.941,281.892,149.425,278.767,145.419z'/%3E%3C/svg%3E%0A") !important;
+            background-size: 16px !important;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .choice-1 {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3C!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0%29 --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 496.158 496.158' style='enable-background:new 0 0 496.158 496.158;' xml:space='preserve'%3E%3Cpath style='fill:%23FFC100;' d='M248.082,0.003C111.07,0.003,0,111.061,0,248.085c0,137,111.07,248.07,248.082,248.07 c137.006,0,248.076-111.07,248.076-248.07C496.158,111.061,385.088,0.003,248.082,0.003z'/%3E%3Cpath style='fill:%23FFFFFF;' d='M319.783,325.595c-4.005-3.124-9.814-4.688-17.432-4.688h-76.465c2.44-3.71,4.834-6.885,7.178-9.521 c5.468-6.64,15.55-15.967,30.249-27.979c14.696-12.012,25.17-20.824,31.421-26.44c6.249-5.614,12.378-13.378,18.384-23.291 c6.006-9.911,9.009-20.922,9.009-33.032c0-7.713-1.442-15.161-4.321-22.339c-2.882-7.178-6.91-13.5-12.085-18.97 c-5.177-5.468-11.183-9.764-18.018-12.891c-10.547-4.688-23.291-7.031-38.232-7.031c-12.403,0-23.218,1.831-32.446,5.493 s-16.846,8.473-22.852,14.429c-6.006,5.958-10.524,12.598-13.55,19.922c-3.028,7.324-4.541,14.355-4.541,21.094 c0,5.566,1.611,9.961,4.834,13.184s7.274,4.834,12.158,4.834c5.566,0,9.789-1.758,12.671-5.273 c2.879-3.516,5.468-8.544,7.764-15.088c2.293-6.542,3.93-10.547,4.907-12.012c7.324-11.229,17.381-16.846,30.176-16.846 c6.054,0,11.646,1.369,16.772,4.102c5.127,2.735,9.178,6.569,12.158,11.499c2.978,4.933,4.468,10.524,4.468,16.772 c0,5.763-1.392,11.646-4.175,17.651s-6.837,11.865-12.158,17.578c-5.324,5.713-11.989,11.403-19.995,17.065 c-4.493,3.028-11.964,9.352-22.412,18.97c-10.451,9.62-22.169,21.167-35.156,34.644c-3.126,3.321-6.006,7.887-8.643,13.696 c-2.637,5.812-3.955,10.474-3.955,13.989c0,5.47,2.051,10.231,6.152,14.282c4.102,4.054,9.814,6.079,17.139,6.079H306.6 c6.445,0,11.254-1.659,14.429-4.98c3.172-3.319,4.761-7.372,4.761-12.158C325.789,332.97,323.786,328.722,319.783,325.595z'/%3E%3C/svg%3E%0A") !important;
+            background-size: 16px !important;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .seat.men {
+            background-color: #E5EFFF;
+            background-image: url("images/seat-shtender.svg");
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .seat.men.noshtender {
+            background-image: url("images/seat.svg");
+        }
+
+        .seat.women.noshtender {
+            background-image: url("images/seat.svg");
+        }
+
+        .seat.women {
+            background-color: #FFEEFE;
+            background-image: url("images/seat-shtender.svg");
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .seat.plastic {
+            background-image: url("images/seat-plastic.svg");
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
+        .seat.women.sidewaysright {
+            background-image: url("images/seat-shtender-right.svg");
+        }
+
+        .seat.women.sidewaysleft {
+            background-image: url("images/seat-shtender-left.svg");
+        }
+
+        .seat.women.sidewaysright.noshtender {
+            background-image: url("images/seat-right.svg");
+        }
+
+        .seat.women.sidewaysleft.noshtender {
+            background-image: url("images/seat-left.svg");
+        }
+
+        .mechitzahorizontal {
+            border-bottom: 4px solid brown !important;
+        }
+
+        .mechitzavertical {
+            border-right: 4px solid brown !important;
+        }
+
+        .legend {
+            font-size: 9pt;
+            margin-bottom: 10px;
+        }
+
+        .legendCell {
+            width: 20px;
+            height: 20px;
+        }
+
+        .legendLabel {
+            padding-right: 20px;
+        }
+
+        .legendCell.seat.men {
+            background-color: #FFFFFF !important;
+        }
+
+        .bimahLabel {
+            position: absolute;
+            top: 200px;
+            left: 275px;
+            font-size: 9pt;
+        }
+    </style>
+
+    <script>
+		// numRows: number of total grid rows including headers
+		// numCols: number of total grid columns including headers
+		// startRowCode: letter code at which to start grid rows
+		// startRowCodeIndex: zero based index at which to start labeling rows
+		// startColumnCodeIndex: zero based index at which to start labeling columns
+		// codeColumnsIndexes: array of zero based columns indexes where numbers should appear
+		// numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
+		// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
+		var lowerConfig = {
+			numRows: 22,
+			numCols: 28,
+			startRowCode: "A",
+			startRowIndex: 2,
+			startColumnCodeIndex: 1,
+			codeColumnsIndexes: [0, 27],
+			numChoices: 2,
+			seatRegions: ["men", "women", "plastic"],
+			regions: {
+				men: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A26", "B22:F26", "G2:G5", "H2:I8",
+					"J2:J4", "J6:J8", "K2:K8", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
+					"K18:M25"],
+				women: ["M2:M7", "N3:N7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
+				shulchan: ["C11:F16"],
+				bimah: ["@10:@17", "@20", "A13:A14"],
+				pole: ["@1", "@26", "J5", "J22:J23"],
+				rabbi: ["@19:A19"],
+				plastic: ["M2:M7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
+				noshtender: ["B7:B8", "C9:C10", "C17:C20", "G2:G5", "H6:H8", "H10:H16", "H18:H25", "K22:K23", "N3:N7"],
+				mechitzahorizontal: ["L1:L7", "O8:O26"],
+				mechitzavertical: ["M7:O7"]
+			}
+		};
+
+		var upperConfig = {
+			numRows: 25,
+			numCols: 30,
+			startRowCode: "U",
+			startRowIndex: 2,
+			startColumnCodeIndex: 1,
+			codeColumnsIndexes: [0, 29],
+			numChoices: 2,
+			seatRegions: ["men", "women", "plastic"],
+			regions: {
+				women: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"],
+				sidewaysleft: ["U2:Y3", "AA2:AE3", "AG2:AK3"],
+				sidewaysright: ["U26:Y27", "AA26:AE27", "AG26:AK27", "AL27"],
+				plastic: ["AP5:AP10", "AO26:AQ28", "AN1:AP3"],
+				noshtender: ["U3:Y3", "AA3:AE3", "AG3:AK3", "AM5:AM10", "AM12:AM17", "AM19:AM24", "U26:Y26", "AA26:AE26", "AG26:AK26"],
+				mechitzahorizontal: ["AL4:AL25"],
+				mechitzavertical: ["U3:AL3", "U25:AL25"]
+			}
+		};
+    </script>
 </head>
 <body>
-    <table class="legend">
+<table class="legend">
     <tr>
-        <td class="legendCell seat men"></td><td class="legendLabel">Regular with shtender רגיל</td>
-        <td class="legendCell seat men noshtender"></td><td class="legendLabel">Regular without shtender רגיל בלי שטנדר</td>
-        <td class="legendCell seat plastic"></td><td class="legendLabel">Plastic פלסטיק</td>
+        <td class="legendCell seat men"></td>
+        <td class="legendLabel">Regular with shtender רגיל</td>
+        <td class="legendCell seat men noshtender"></td>
+        <td class="legendLabel">Regular without shtender רגיל בלי שטנדר</td>
+        <td class="legendCell seat plastic"></td>
+        <td class="legendLabel">Plastic פלסטיק</td>
     </tr>
     <tr>
-        <td class="legendCell seat choice-0"></td><td class="legendLabel">1st Choice עדיפות ראשונה</td>
-        <td class="legendCell seat choice-1"></td><td class="legendLabel">2nd Choice עדיפות שניה</td>
-        <td class="legendCell">&nbsp;</td><td class="legendLabel">&nbsp;</td>
+        <td class="legendCell seat choice-0"></td>
+        <td class="legendLabel">1st Choice עדיפות ראשונה</td>
+        <td class="legendCell seat choice-1"></td>
+        <td class="legendLabel">2nd Choice עדיפות שניה</td>
+        <td class="legendCell">&nbsp;</td>
+        <td class="legendLabel">&nbsp;</td>
     </tr>
-    </table>
-    <div class="gridTitle">Ground Floor קומת כניסה</div>
-    <div id="lowerLevelContainer"></div>
-    <div class="gridSeparator"></div>
-    <div class="gridTitle">Upper Floor קומת עליונה</div>
-    <div id="upperLevelContainer"></div>
-    <div class="bimahLabel">Bimah בימה</div>
+</table>
+<div class="gridTitle">Ground Floor קומת כניסה</div>
+<div id="lowerLevelContainer"></div>
+<div class="gridSeparator"></div>
+<div class="gridTitle">Upper Floor קומת עליונה</div>
+<div id="upperLevelContainer"></div>
+<div class="bimahLabel">Bimah בימה</div>
 </body>
 <script>
-function aggregateStatuses(statuses) {
-    var nameMap = ["1st","2nd","3rd","4th","5th"];
-    var aggregate = {
-        seatChoices: {}    
-    };
-    statuses.forEach(function(status) {
-        for(var choiceKey in status.seatChoices) {
-            var choices = status.seatChoices[choiceKey];
-            var aggChoices = aggregate.seatChoices[choiceKey];
-            if (!aggChoices) {
-                aggChoices = [];
-                aggregate.seatChoices[choiceKey] = aggChoices;
-            }
-            choices.forEach(function(choice) {
-                aggChoices.push(choice);
-            });
-        }
-    });
-    for(var choiceKey in aggregate.seatChoices) {
-    	var choices = aggregate.seatChoices[choiceKey];
-    	delete aggregate.seatChoices[choiceKey];
-        aggregate.seatChoices[nameMap[choiceKey]] = choices.join(",");
-    }
-    return aggregate;
-};
+	function getSeatClassification(classes) {
+		return classes.indexOf("women") > -1 ? "women" : "men";
+	}
 
-function getCurrentWidgetStatus() {
-    var lowerStatus = lowerGrid.getStatus();
-    var upperStatus = upperGrid.getStatus();
-    var aggregate = aggregateStatuses([lowerStatus, upperStatus]);
-    var hasChoices = false;
-    for(var choiceKey in aggregate.seatChoices) {
-        if (aggregate.seatChoices[choiceKey] != "") {
-            hasChoices = true;
-            break;
-        }
-    }
-    if (!hasChoices) {
-        aggregate.empty = true;
-    }
-    return aggregate;
-}
-    
-function pushChanges() {
-    var status = getCurrentWidgetStatus();        
-    var value = status.empty ? null : JSON.stringify(status);
-    JFCustomWidget.sendData(getCurrentWidgetStatus());
-    console.log(getCurrentWidgetStatus());
-}
+	function aggregateStatuses(statuses) {
+		var nameMap = {
+			"0-men": "1st men",
+			"1-men": "2nd men",
+			"0-women": "1st women",
+			"1-women": "2nd women"
+		};
+		var aggregate = {
+			seatChoices: {}
+		};
+		statuses.forEach(function (status) {
+			for (var choiceKey in status.seatChoices) {
+				var choices = status.seatChoices[choiceKey];
+				for (seat in choices) {
+					var seatClassification = getSeatClassification(choices[seat]);
+					var aggregateKey = choiceKey + "-" + seatClassification;
+					var aggChoices = aggregate.seatChoices[aggregateKey];
+					if (!aggChoices) {
+						aggChoices = [];
+						aggregate.seatChoices[aggregateKey] = aggChoices;
+					}
+					aggChoices.push(seat);
+				}
+			}
+		});
+		for (var choiceKey in aggregate.seatChoices) {
+			var choices = aggregate.seatChoices[choiceKey];
+			delete aggregate.seatChoices[choiceKey];
+			aggregate.seatChoices[nameMap[choiceKey]] = choices.join(",");
+		}
+		return aggregate;
+	};
 
-var lowerGrid = new SeatingGrid(lowerConfig);
-var upperGrid = new SeatingGrid(upperConfig);
-    
-lowerGrid.on("change", pushChanges);
-upperGrid.on("change", pushChanges);
-    
-document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createGrid());
-document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid());
+	function getCurrentWidgetStatus() {
+		var lowerStatus = lowerGrid.getStatus();
+		var upperStatus = upperGrid.getStatus();
+		var aggregate = aggregateStatuses([lowerStatus, upperStatus]);
+		var hasChoices = false;
+		for (var choiceKey in aggregate.seatChoices) {
+			if (aggregate.seatChoices[choiceKey] != "") {
+				hasChoices = true;
+				break;
+			}
+		}
+		if (!hasChoices) {
+			aggregate.empty = true;
+		}
+		return aggregate;
+	}
+
+	function pushChanges() {
+		var status = getCurrentWidgetStatus();
+		var value = status.empty ? null : JSON.stringify(status);
+		JFCustomWidget.sendData(getCurrentWidgetStatus());
+		console.log(getCurrentWidgetStatus());
+	}
+
+	var lowerGrid = new SeatingGrid(lowerConfig);
+	var upperGrid = new SeatingGrid(upperConfig);
+
+	lowerGrid.on("change", pushChanges);
+	upperGrid.on("change", pushChanges);
+
+	document.getElementById("lowerLevelContainer").appendChild(lowerGrid.createGrid());
+	document.getElementById("upperLevelContainer").appendChild(upperGrid.createGrid());
 
 
-JFCustomWidget.subscribe("ready", function(){
-    JFCustomWidget.subscribe("submit", function() {
-        var status = getCurrentWidgetStatus();        
-        var value = status.empty ? null : JSON.stringify(status);  
-        JFCustomWidget.sendSubmit({
-            valid: value != null,
-            value: value
-        });
-    });
-});
+	JFCustomWidget.subscribe("ready", function () {
+		JFCustomWidget.subscribe("submit", function () {
+			var status = getCurrentWidgetStatus();
+			var value = status.empty ? null : JSON.stringify(status);
+			JFCustomWidget.sendSubmit({
+				valid: value != null,
+				value: value
+			});
+		});
+	});
 </script>
 </html>
