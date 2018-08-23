@@ -297,8 +297,8 @@
 	function pushChanges() {
 		var status = getCurrentWidgetStatus();
 		var value = status.empty ? null : JSON.stringify(status);
-		JFCustomWidget.sendData(getCurrentWidgetStatus());
-		console.log(getCurrentWidgetStatus());
+		JFCustomWidget.sendData(value);
+		console.log(value);
 	}
 
 	var lowerGrid = new SeatingGrid(lowerConfig);
