@@ -58,6 +58,7 @@
 		createGrid: function () {
 			var config = this.config;
 			var grid = document.createElement("table");
+			this.grid = grid;
 			grid.className = "seatingGrid";
 			var tBody = document.createElement("tbody");
 			grid.appendChild(tBody);
@@ -136,6 +137,12 @@
 				value += (letterCode.charCodeAt(0) - 65 + 1) * 26;
 			}
 			return value;
+		},
+
+		getCellByUserCoordinates: function(singleCellCoordinate) {
+			const grid = this.grid;
+			const coordinates = this.getLogicalRangeCoordinates(singleCellCoordinate);
+			return this.getCellAt(grid, coordinates.begin.x, coordinates.begin.y);
 		},
 
 		getCellAt: function (grid, x, y) {
