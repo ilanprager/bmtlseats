@@ -294,11 +294,19 @@
 		return aggregate;
 	}
 
-	function pushChanges() {
+	function getCurrentValueObject() {
 		var status = getCurrentWidgetStatus();
 		var value = status.empty ? null : JSON.stringify(status);
-		JFCustomWidget.sendData(value);
-		console.log(value);
+		var returnValue = {
+			valid: value != null,
+			value: value
+		};
+		console.log(returnValue);
+		return returnValue;
+	}
+
+	function pushChanges() {
+		JFCustomWidget.sendData(getCurrentValueObject());
 	}
 
 	function locateCell(grid, range) {
@@ -358,12 +366,7 @@
 			applyState(dataObj.value);
 		}
 		JFCustomWidget.subscribe("submit", function () {
-			var status = getCurrentWidgetStatus();
-			var value = status.empty ? null : JSON.stringify(status);
-			JFCustomWidget.sendSubmit({
-				valid: value != null,
-				value: value
-			});
+			JFCustomWidget.sendSubmit(getCurrentValueObject());
 		});
 	});
 </script>
