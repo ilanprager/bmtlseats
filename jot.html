@@ -301,47 +301,47 @@
 		console.log(value);
 	}
 
-    function locateCell(grid, range) {
-        try {
-            return grid.getCellByUserCoordinates(range);
-        } catch (err) {
-        }
-        return null;
-    }
+	function locateCell(grid, range) {
+		try {
+			return grid.getCellByUserCoordinates(range);
+		} catch (err) {
+		}
+		return null;
+	}
 
-    function attemptSetState(range, numChoice) {
-        var grid = lowerGrid;
-        var cell = locateCell(grid, range);
-        if (!cell) {
-            grid = upperGrid;
-            cell = locateCell(grid, range);
-        }
-        if (!cell) {
-            console.error("Could not find cell in lower or upper grid " + range);
-            return;
-        }
-        for (var i = 0; i <= numChoice; i++) {
-            grid.onCellClick(cell);
-        }
-    }
+	function attemptSetState(range, numChoice) {
+		var grid = lowerGrid;
+		var cell = locateCell(grid, range);
+		if (!cell) {
+			grid = upperGrid;
+			cell = locateCell(grid, range);
+		}
+		if (!cell) {
+			console.error("Could not find cell in lower or upper grid " + range);
+			return;
+		}
+		for (var i = 0; i <= numChoice; i++) {
+			grid.onCellClick(cell);
+		}
+	}
 
-    function applyState(value) {
-        // "{"seatChoices":{"1st men":"I3,I4","2nd men":"I5,I6","1st women":"AK26,AJ26","2nd women":"AJ27,AK27"}}"
-        try {
-            const state = JSON.parse(value);
-            for (var key in state.seatChoices) {
-                var choices = state.seatChoices[key].split(",");
-                var numChoice = key.startsWith("1st") ? 0 : 1;
-                choices.forEach(function(choice) {
-                    attemptSetState(choice, numChoice);
-                });
-            }
+	function applyState(value) {
+		// "{"seatChoices":{"1st men":"I3,I4","2nd men":"I5,I6","1st women":"AK26,AJ26","2nd women":"AJ27,AK27"}}"
+		try {
+			const state = JSON.parse(value);
+			for (var key in state.seatChoices) {
+				var choices = state.seatChoices[key].split(",");
+				var numChoice = key.startsWith("1st") ? 0 : 1;
+				choices.forEach(function (choice) {
+					attemptSetState(choice, numChoice);
+				});
+			}
 
-        } catch (err) {            
-            console.error("Could not apply state for " + value);
-            console.error(err);
-        }
-    }
+		} catch (err) {
+			console.error("Could not apply state for " + value);
+			console.error(err);
+		}
+	}
 
 	var lowerGrid = new SeatingGrid(lowerConfig);
 	var upperGrid = new SeatingGrid(upperConfig);
@@ -354,9 +354,9 @@
 
 
 	JFCustomWidget.subscribe("ready", function (dataObj) {
-        if (dataObj && typeof dataObj == "object" && dataObj.value && dataObj.value !== "") {
-            applyState(dataObj.value);
-        }
+		if (dataObj && typeof dataObj == "object" && dataObj.value && dataObj.value !== "") {
+			applyState(dataObj.value);
+		}
 		JFCustomWidget.subscribe("submit", function () {
 			var status = getCurrentWidgetStatus();
 			var value = status.empty ? null : JSON.stringify(status);

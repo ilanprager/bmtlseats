@@ -139,7 +139,7 @@
 			return value;
 		},
 
-		getCellByUserCoordinates: function(singleCellCoordinate) {
+		getCellByUserCoordinates: function (singleCellCoordinate) {
 			const grid = this.grid;
 			const coordinates = this.getLogicalRangeCoordinates(singleCellCoordinate);
 			return this.getCellAt(grid, coordinates.begin.x, coordinates.begin.y);
