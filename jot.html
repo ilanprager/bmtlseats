@@ -108,6 +108,14 @@
             background-position-y: center;
         }
 
+        .seat.plasticshtender {
+            background-image: url("images/seat-plastic-shtender.svg");
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
         .seat.blue {
             background-image: url("images/seat-blue.svg");
             background-size: 16px;
@@ -193,7 +201,8 @@
 				bimah: ["@10:@17", "@20", "A13:A14"],
 				pole: ["@1", "@26", "J5", "J22:J23"],
 				rabbi: ["@19:A19"],
-				plastic: ["D2", "M2:M6", "P11:P13", "Q10:Q13", "P15:Q20","P23:P25", "Q23:Q26", "N17:N26", "U10:U13", "U15:U16"],
+				plastic: ["P11:P13", "Q10:Q13", "P15:Q20","P23:P25", "Q23:Q26", "N17:N26", "U10:U13", "U15:U16"],
+				plasticshtender: ["M2:M6", "D2"],
 				noshtender: ["B7:B8", "C9:C10", "C17:C20", "G2:G5", "H6:H8", "H10:H16", "H18:H25", "K22:K23", "N3:N7", "B26"],
 				mechitzahorizontal: ["L1:L7", "O8:O26"],
 				mechitzavertical: ["M7:O7"],
@@ -211,13 +220,14 @@
 			numChoices: 2,
 			seatRegions: ["men", "women", "plastic"],
 			regions: {
-				"women":["AA2:AE3","AG2:AK3","AM2:AQ3","AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27","AS5:AV10","AT1:AV3","AS12:AV17","AS19:AV24","AU26:AW28"],
-                "sidewaysleft":["AA2:AE3","AG2:AK3","AM2:AQ3"],
-                "sidewaysright":["AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27"],
-                "plastic":["AV5:AV10","AU26:AW28","AT1:AV3"],
-                "noshtender":["AA3:AE3","AG3:AK3","AM3:AQ3","AS5:AS10","AS12:AS17","AS19:AS24","AA26:AE26","AG26:AK26","AM26:AQ26"],
-                "mechitzahorizontal":["AR4:AR25"],
-                "mechitzavertical":["AA3:AR3","AA25:AR25"]
+				women:["AA2:AE3","AG2:AK3","AM2:AQ3","AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27","AS5:AV10","AT1:AV3","AS12:AV17","AS19:AV24","AU26:AW28"],
+                sidewaysleft:["AA2:AE3","AG2:AK3","AM2:AQ3"],
+                sidewaysright:["AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27"],
+                plastic:["AU26:AW28","AT1:AV3"],
+				plasticshtender: ["AV5:AV10"],
+                noshtender:["AA3:AE3","AG3:AK3","AM3:AQ3","AS5:AS10","AS12:AS17","AS19:AS24","AA26:AE26","AG26:AK26","AM26:AQ26"],
+                mechitzahorizontal:["AR4:AR25"],
+                mechitzavertical:["AA3:AR3","AA25:AR25"]
 			}
 		};
     </script>
