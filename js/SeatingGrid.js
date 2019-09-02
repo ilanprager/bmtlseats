@@ -248,7 +248,7 @@
 		},
 
 		addRowHeaders: function (grid, startLetter, numRows) {
-			var code = startLetter.charCodeAt(0);
+			var code = this.translateLetterCodeToNumber(startLetter) + 65;
 			var codeColumnsIndexes = this.config.codeColumnsIndexes;
 			for (var i = this.config.startRowIndex; i < numRows; i++) {
 				codeColumnsIndexes.forEach(function (colIndex) {

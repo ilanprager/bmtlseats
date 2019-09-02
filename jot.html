@@ -108,6 +108,14 @@
             background-position-y: center;
         }
 
+        .seat.blue {
+            background-image: url("images/seat-blue.svg");
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+        }
+
         .seat.women.sidewaysright {
             background-image: url("images/seat-shtender-right.svg");
         }
@@ -168,47 +176,48 @@
 		// numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
 		// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
 		var lowerConfig = {
-			numRows: 22,
+			numRows: 23,
 			numCols: 28,
 			startRowCode: "A",
 			startRowIndex: 2,
 			startColumnCodeIndex: 1,
 			codeColumnsIndexes: [0, 27],
 			numChoices: 2,
-			seatRegions: ["men", "women", "plastic"],
+			seatRegions: ["men", "women", "plastic", "blue"],
 			regions: {
 				men: ["A1:C5", "D2:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A25", "B22:F26", "G2:G5", "H2:I8",
 					"J2:J4", "J6:J8", "K2:K8", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
-					"K18:M25"],
-				women: ["M2:M7", "N3:N7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
+					"K18:M25", "N17:N26"],
+				women: ["M2:M6", "N3:N7", "P11:P13", "Q10:T13", "P15:S20", "T15:T18", "P23:P25", "Q23:R26", "S25:S26", "U10:U13", "U15:U16"],
 				shulchan: ["D11:F16"],
 				bimah: ["@10:@17", "@20", "A13:A14"],
 				pole: ["@1", "@26", "J5", "J22:J23"],
 				rabbi: ["@19:A19"],
-				plastic: ["M2:M7", "P10:P12", "Q9:T12", "P15:R20", "S15:S18", "T15:T16", "P23:Q25", "R23:S26"],
+				plastic: ["D2", "M2:M6", "P11:P13", "Q10:Q13", "P15:Q20","P23:P25", "Q23:Q26", "N17:N26", "U10:U13", "U15:U16"],
 				noshtender: ["B7:B8", "C9:C10", "C17:C20", "G2:G5", "H6:H8", "H10:H16", "H18:H25", "K22:K23", "N3:N7", "B26"],
 				mechitzahorizontal: ["L1:L7", "O8:O26"],
-				mechitzavertical: ["M7:O7"]
+				mechitzavertical: ["M7:O7"],
+                blue: ["R10:T13", "R15:S20", "T15:T18","R23:R26","S25:S26"]
 			}
 		};
 
 		var upperConfig = {
 			numRows: 25,
 			numCols: 30,
-			startRowCode: "U",
+			startRowCode: "AA",
 			startRowIndex: 2,
 			startColumnCodeIndex: 1,
 			codeColumnsIndexes: [0, 29],
 			numChoices: 2,
 			seatRegions: ["men", "women", "plastic"],
 			regions: {
-				women: ["U2:Y3", "AA2:AE3", "AG2:AK3", "U26:Y27", "AA26:AE27", "AG26:AK27", "AL27", "AM5:AP10", "AN1:AP3", "AM12:AP17", "AM19:AP24", "AO26:AQ28"],
-				sidewaysleft: ["U2:Y3", "AA2:AE3", "AG2:AK3"],
-				sidewaysright: ["U26:Y27", "AA26:AE27", "AG26:AK27", "AL27"],
-				plastic: ["AP5:AP10", "AO26:AQ28", "AN1:AP3"],
-				noshtender: ["U3:Y3", "AA3:AE3", "AG3:AK3", "AM5:AM10", "AM12:AM17", "AM19:AM24", "U26:Y26", "AA26:AE26", "AG26:AK26"],
-				mechitzahorizontal: ["AL4:AL25"],
-				mechitzavertical: ["U3:AL3", "U25:AL25"]
+				"women":["AA2:AE3","AG2:AK3","AM2:AQ3","AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27","AS5:AV10","AT1:AV3","AS12:AV17","AS19:AV24","AU26:AW28"],
+                "sidewaysleft":["AA2:AE3","AG2:AK3","AM2:AQ3"],
+                "sidewaysright":["AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27"],
+                "plastic":["AV5:AV10","AU26:AW28","AT1:AV3"],
+                "noshtender":["AA3:AE3","AG3:AK3","AM3:AQ3","AS5:AS10","AS12:AS17","AS19:AS24","AA26:AE26","AG26:AK26","AM26:AQ26"],
+                "mechitzahorizontal":["AR4:AR25"],
+                "mechitzavertical":["AA3:AR3","AA25:AR25"]
 			}
 		};
     </script>
@@ -228,8 +237,8 @@
         <td class="legendLabel">1st Choice עדיפות ראשונה</td>
         <td class="legendCell seat choice-1"></td>
         <td class="legendLabel">2nd Choice עדיפות שניה</td>
-        <td class="legendCell">&nbsp;</td>
-        <td class="legendLabel">&nbsp;</td>
+        <td class="legendCell seat blue"></td>
+        <td class="legendLabel">Blue כחול</td>
     </tr>
 </table>
 <div class="gridTitle">Ground Floor קומת כניסה</div>
