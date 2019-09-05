@@ -5,7 +5,7 @@
     <title>BMTL Seating Widget </title>
 
     <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
-    <script src="js/SeatingGrid.js?v=2"></script>
+    <script src="js/SeatingGrid.js?v=3"></script>
 
     <style>
         body {
@@ -184,7 +184,7 @@
 		// numChoices: number of choices (e.g. choose 1st and 2nd preference for seats == 2)
 		// seatRegions: array of region names that should be recognized as seats (e.g. ["men", "women"])
 		var lowerConfig = {
-			numRows: 23,
+			numRows: 22,
 			numCols: 28,
 			startRowCode: "A",
 			startRowIndex: 2,
@@ -196,17 +196,17 @@
 				men: ["A1:C5", "D3:D5", "B7:B8", "C7:F10", "C17:F20", "A21:A25", "B22:F26", "G2:G5", "H2:I8",
 					"J2:J4", "J6:J8", "K2:K8", "H10:N16", "H18:I25", "J18:J21", "J24:J25",
 					"K18:M25", "N17:N26"],
-				women: ["M2:M6", "N3:N7", "P11:P13", "Q10:T13", "P15:S20", "T15:T18", "P23:P25", "Q23:R26", "S25:S26", "U10:U13", "U15:U16"],
+				women: ["M2:M6", "N3:N7", "P11:P13", "Q10:T13", "P16:S20", "T16:T18", "P23:P25", "Q23:R26"],
 				shulchan: ["D11:F16"],
 				bimah: ["@10:@17", "@20", "A13:A14"],
 				pole: ["@1", "@26", "J5", "J22:J23"],
 				rabbi: ["@19:A19"],
-				plastic: ["P11:P13", "Q10:Q13", "P15:Q20","P23:P25", "Q23:Q26", "N17:N26", "U10:U13", "U15:U16"],
+				plastic: ["P11:P13", "Q10:Q13", "P16:Q20","P23:P25", "Q23:Q26", "N17:N26"],
 				plasticshtender: ["M2:M6"],
 				noshtender: ["B7:B8", "C9:C10", "C17:C20", "G2:G5", "H6:H8", "H10:H16", "H18:H25", "K22:K23", "N3:N7", "B26"],
 				mechitzahorizontal: ["L1:L8", "O9:O26"],
 				mechitzavertical: ["L8:N8"],
-                blue: ["R10:T13", "R15:S20", "T15:T18","R23:R26","S25:S26"]
+                blue: ["R10:T13", "R16:S20", "T16:T18","R23:R26"]
 			}
 		};
 
@@ -220,10 +220,10 @@
 			numChoices: 2,
 			seatRegions: ["men", "women", "plastic"],
 			regions: {
-				women:["AA2:AE3","AG2:AK3","AM2:AQ3","AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27","AS5:AV10","AT1:AV3","AS12:AV17","AS19:AV24","AU26:AW28"],
+				women:["AA2:AE3","AG2:AK3","AM2:AQ3","AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27","AS5:AV10","AT1:AV3","AS12:AV17","AS19:AV24","AU27:AU28","AV26:AW28"],
                 sidewaysleft:["AA2:AE3","AG2:AK3","AM2:AQ3"],
                 sidewaysright:["AA26:AE27","AG26:AK27","AM26:AQ27","AR27:AR27"],
-                plastic:["AU26:AW28","AT1:AV3"],
+                plastic:["AU27:AU28","AV26:AW28","AT1:AV3"],
 				plasticshtender: ["AV5:AV10"],
                 noshtender:["AA3:AE3","AG3:AK3","AM3:AQ3","AS5:AS10","AS12:AS17","AS19:AS24","AA26:AE26","AG26:AK26","AM26:AQ26"],
                 mechitzahorizontal:["AQ6:AQ23"],

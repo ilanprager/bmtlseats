@@ -96,6 +96,7 @@
 							this.addClass(cell, category);
 							if (category == "seat" || seatRegions.indexOf(category) > -1) {
 								this.addClass(cell, "seat");
+								cell.title = cell.rowCode + cell.colCode;
 								this.assignSeatEvents(cell);
 							}
 						}
