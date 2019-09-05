@@ -71,7 +71,7 @@
 				tBody.appendChild(row);
 			}
 			this.addRowHeaders(grid, config.startRowCode, config.numRows)
-			this.addColumnHeaders(grid, config.numCols);
+			this.addColumnHeaders(grid, config.numCols, config.codeColumnsIndexes);
 			this.applyGridCellStyles(grid, config);
 			return grid;
 		},
@@ -271,12 +271,14 @@
 			}
 		},
 
-		addColumnHeaders: function (grid, numColumns) {
-			for (var i = 1; i < numColumns; i++) {
+		addColumnHeaders: function (grid, numColumns, codeColumnsIndexes) {
+			for (var i = 0; i < numColumns; i++) {
 				var cell = this.getCellAt(grid, i, 0);
 				var colCode = i + "";
 				cell.colCode = colCode;
-				cell.innerHTML = colCode;
+				if (codeColumnsIndexes.indexOf(i) < 0) {
+					cell.innerHTML = colCode;
+				}
 				cell.className = "colHeader";
 			}
 		},
